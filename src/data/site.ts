@@ -71,7 +71,7 @@ export const site = {
     },
     { name: 'Trening personalny', price: '120 zł', period: '/ 60 min', details: ['Plan pod Twój cel', 'Porady żywieniowe', 'Pakiety taniej'] },
   ] as { name: string; price: string; period?: string; details: string[]; featured?: boolean }[],
-  sportCards: ['FitProfit', 'FitSport'],
+  sportCards: ['Multisport', 'MyBenefit', 'FitProfit', 'FitSport'],
 
   offer: [
     { title: 'Siłownia', text: 'Pełen zestaw hantli, stanowiska z wolnymi ciężarami, maszyny i bramy. Wszystko, czego potrzebujesz do treningu siłowego.' },
@@ -108,7 +108,7 @@ export const site = {
     },
     {
       q: 'Czy honorujecie karty sportowe?',
-      a: 'Tak, przyjmujemy karty FitProfit i FitSport.',
+      a: 'Tak, przyjmujemy karty Multisport, MyBenefit, FitProfit i FitSport.',
     },
     {
       q: 'Co zabrać na pierwszy trening?',
