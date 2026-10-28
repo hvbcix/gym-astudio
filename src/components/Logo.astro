@@ -1,0 +1,13 @@
+---
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<span class={`inline-flex flex-col items-center leading-none ${className}`} aria-label="A STUDIO GYM">
+  <span class="text-xl font-light tracking-[0.18em]">ASTUDIO</span>
+  <span class="mt-1 flex w-full items-center gap-2 text-[0.55rem] tracking-[0.5em]">
+    <span class="h-px flex-1 bg-current opacity-60"></span>GYM<span class="h-px flex-1 bg-current opacity-60"></span>
+  </span>
+</span>

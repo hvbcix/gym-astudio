@@ -1,0 +1,155 @@
+---
+import { site } from '../data/site';
+
+const DAYS = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
+const visibleDays = DAYS.filter((d, i) => i < 5 || site.schedule.some((c) => c.day === d));
+const byDay = visibleDays.map((day) => ({
+  day,
+  classes: site.schedule.filter((c) => c.day === day).sort((a, b) => a.time.localeCompare(b.time)),
+}));
+---
+
+<section id="grafik" class="bg-ink py-20 text-paper md:py-28" data-sheet-url={site.scheduleSheetCsvUrl}>
+  <div class="mx-auto max-w-6xl px-5">
+    <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+      <div>
+        <p class="eyebrow text-paper/55">Zajęcia grupowe</p>
+        <h2 class="mt-4 font-display text-5xl font-medium md:text-7xl">Grafik</h2>
+      </div>
+      <p class="max-w-md text-paper/70">
+        Małe grupy, więc warto dać znać wcześniej. Zapisy telefonicznie pod <a href={site.phoneHref} class="text-paper underline underline-offset-4">{site.phone}</a> lub w wiadomości na Instagramie.
+      </p>
+    </div>
+
+    <div class="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5" data-schedule-grid>
+      {
+        byDay.map(({ day, classes }) => (
+          <article class="overflow-hidden rounded-2xl bg-paper text-ink" data-day={day}>
+            <h3 class="flex items-center justify-between bg-graphite px-5 py-3 text-xs font-medium uppercase tracking-[0.25em] text-paper">
+              {day}
+              <span class="hidden rounded-full bg-paper px-2 py-0.5 text-[0.6rem] tracking-[0.15em] text-ink" data-today-badge>
+                Dziś
+              </span>
+            </h3>
+            {classes.length ? (
+              <ul class="divide-y divide-ink/10 px-5">
+                {classes.map((c) => (
+                  <li class="py-5">
+                    <p class="font-display text-3xl font-medium">{c.time}</p>
+                    <p class="mt-1 text-sm font-medium uppercase tracking-[0.18em]">{c.name}</p>
+                    {c.note && <p class="mt-1 text-sm text-ink/60">{c.note}</p>}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p class="px-5 py-6 text-sm text-ink/60">Bez zajęć grupowych. Siłownia otwarta.</p>
+            )}
+          </article>
+        ))
+      }
+    </div>
+
+    <p class="mt-6 hidden text-sm text-paper/50" data-schedule-error>
+      Nie udało się pobrać aktualnego grafiku. Wyświetlamy ostatnią zapisaną wersję.
+    </p>
+  </div>
+</section>
+
+<script>
+  const DAYS = ['Poniedziałek', 'Wtorek', 'Środa', 'Czwartek', 'Piątek', 'Sobota', 'Niedziela'];
+  const section = document.getElementById('grafik')!;
+  const grid = section.querySelector<HTMLElement>('[data-schedule-grid]')!;
+
+  type Row = { day: string; time: string; name: string; note: string };
+
+  const normalize = (s: string) =>
+    s.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/ł/g, 'l');
+
+  function parseCsv(text: string): string[][] {
+    const rows: string[][] = [];
+    let row: string[] = [];
+    let field = '';
+    let quoted = false;
+    for (let i = 0; i < text.length; i++) {
+      const ch = text[i];
+      if (quoted) {
+        if (ch === '"' && text[i + 1] === '"') { field += '"'; i++; }
+        else if (ch === '"') quoted = false;
+        else field += ch;
+      } else if (ch === '"') quoted = true;
+      else if (ch === ',') { row.push(field); field = ''; }
+      else if (ch === '\n' || ch === '\r') {
+        if (ch === '\r' && text[i + 1] === '\n') i++;
+        row.push(field); rows.push(row); row = []; field = '';
+      } else field += ch;
+    }
+    if (field || row.length) { row.push(field); rows.push(row); }
+    return rows.filter((r) => r.some((c) => c.trim()));
+  }
+
+  function toRows(table: string[][]): Row[] {
+    const [header, ...body] = table;
+    const idx = (names: string[]) => header.findIndex((h) => names.includes(normalize(h)));
+    const iDay = idx(['dzien', 'day']);
+    const iTime = idx(['godzina', 'czas', 'time']);
+    const iName = idx(['zajecia', 'nazwa', 'name']);
+    const iNote = idx(['opis', 'info', 'note']);
+    if (iDay < 0 || iTime < 0 || iName < 0) throw new Error('Brak wymaganych kolumn');
+    return body
+      .map((r) => {
+        const day = DAYS.find((d) => normalize(d) === normalize(r[iDay] ?? '')) ?? '';
+        return { day, time: (r[iTime] ?? '').trim(), name: (r[iName] ?? '').trim(), note: iNote >= 0 ? (r[iNote] ?? '').trim() : '' };
+      })
+      .filter((r) => r.day && r.time && r.name);
+  }
+
+  const esc = (s: string) =>
+    s.replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]!);
+
+  function render(rows: Row[]) {
+    const days = DAYS.filter((d, i) => i < 5 || rows.some((r) => r.day === d));
+    grid.innerHTML = days
+      .map((day) => {
+        const classes = rows.filter((r) => r.day === day).sort((a, b) => a.time.localeCompare(b.time));
+        const list = classes.length
+          ? `<ul class="divide-y divide-ink/10 px-5">${classes
+              .map(
+                (c) => `<li class="py-5">
+                  <p class="font-display text-3xl font-medium">${esc(c.time)}</p>
+                  <p class="mt-1 text-sm font-medium uppercase tracking-[0.18em]">${esc(c.name)}</p>
+                  ${c.note ? `<p class="mt-1 text-sm text-ink/60">${esc(c.note)}</p>` : ''}
+                </li>`,
+              )
+              .join('')}</ul>`
+          : '<p class="px-5 py-6 text-sm text-ink/60">Bez zajęć grupowych. Siłownia otwarta.</p>';
+        return `<article class="overflow-hidden rounded-2xl bg-paper text-ink" data-day="${day}">
+          <h3 class="flex items-center justify-between bg-graphite px-5 py-3 text-xs font-medium uppercase tracking-[0.25em] text-paper">
+            ${day}<span class="hidden rounded-full bg-paper px-2 py-0.5 text-[0.6rem] tracking-[0.15em] text-ink" data-today-badge>Dziś</span>
+          </h3>${list}</article>`;
+      })
+      .join('');
+    markToday();
+  }
+
+  function markToday() {
+    const weekday = new Intl.DateTimeFormat('en-US', { timeZone: 'Europe/Warsaw', weekday: 'short' }).format(new Date());
+    const i = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(weekday);
+    const card = grid.querySelector<HTMLElement>(`[data-day="${DAYS[i]}"]`);
+    if (!card) return;
+    card.classList.add('ring-2', 'ring-paper', 'ring-offset-4', 'ring-offset-ink');
+    card.querySelector('[data-today-badge]')?.classList.remove('hidden');
+  }
+
+  markToday();
+
+  const url = section.dataset.sheetUrl;
+  if (url) {
+    fetch(url, { cache: 'no-store' })
+      .then((r) => (r.ok ? r.text() : Promise.reject(new Error(String(r.status)))))
+      .then((text) => {
+        const rows = toRows(parseCsv(text));
+        if (rows.length) render(rows);
+      })
+      .catch(() => section.querySelector('[data-schedule-error]')?.classList.remove('hidden'));
+  }
+</script>

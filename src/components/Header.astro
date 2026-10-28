@@ -1,0 +1,40 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+
+const links = [
+  { href: '#oferta', label: 'Oferta' },
+  { href: '#grafik', label: 'Grafik' },
+  { href: '#cennik', label: 'Cennik' },
+  { href: '#opinie', label: 'Opinie' },
+  { href: '#kontakt', label: 'Kontakt' },
+];
+---
+
+<header class="sticky top-0 z-40 border-b border-paper/10 bg-ink/90 text-paper backdrop-blur">
+  <div class="mx-auto flex h-16 max-w-6xl items-center justify-between px-5">
+    <a href="#top" class="rounded focus-visible:outline-2 focus-visible:outline-paper"><Logo /></a>
+
+    <nav class="hidden items-center gap-8 text-sm tracking-wide md:flex" aria-label="Główna nawigacja">
+      {links.map((l) => <a href={l.href} class="text-paper/75 transition hover:text-paper">{l.label}</a>)}
+    </nav>
+
+    <a href={site.phoneHref} class="btn-light hidden !px-5 !py-2.5 md:inline-flex">{site.phone}</a>
+
+    <details class="group relative md:hidden">
+      <summary class="flex size-10 cursor-pointer list-none items-center justify-center rounded-full border border-paper/25" aria-label="Menu">
+        <span class="block h-px w-4 bg-paper shadow-[0_5px_0_var(--color-paper),0_-5px_0_var(--color-paper)] group-open:shadow-none group-open:rotate-45"></span>
+      </summary>
+      <nav class="absolute right-0 top-12 w-56 rounded-2xl border border-paper/10 bg-coal p-2 shadow-2xl" aria-label="Menu mobilne">
+        {links.map((l) => <a href={l.href} class="block rounded-xl px-4 py-3 text-paper/85 hover:bg-paper/10">{l.label}</a>)}
+        <a href={site.phoneHref} class="mt-1 block rounded-xl bg-paper px-4 py-3 text-center font-medium text-ink">Zadzwoń</a>
+      </nav>
+    </details>
+  </div>
+</header>
+
+<script>
+  document.querySelectorAll<HTMLAnchorElement>('header details nav a').forEach((a) =>
+    a.addEventListener('click', () => a.closest('details')?.removeAttribute('open')),
+  );
+</script>

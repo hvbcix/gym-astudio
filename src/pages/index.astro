@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Header from '../components/Header.astro';
+import Hero from '../components/Hero.astro';
+import Offer from '../components/Offer.astro';
+import Schedule from '../components/Schedule.astro';
+import Pricing from '../components/Pricing.astro';
+import Reviews from '../components/Reviews.astro';
+import Faq from '../components/Faq.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
+import MobileBar from '../components/MobileBar.astro';
+import { site } from '../data/site';
+
+const hours = site.openingHours;
+---
+
+<Layout>
+  {
+    site.demoBanner && (
+      <div class="bg-amber-200 px-5 py-2 text-center text-xs font-medium text-amber-950">
+        Wersja demonstracyjna strony przygotowana dla {site.name}. Ceny i część treści do potwierdzenia.
+      </div>
+    )
+  }
+  <Header />
+  <main>
+    <Hero />
+    <Offer />
+    <Schedule />
+    <Pricing />
+    <Reviews />
+    <Faq />
+    <Contact />
+  </main>
+  <Footer />
+  <MobileBar />
+</Layout>
+
+<script is:inline define:vars={{ hours }}>
+  (function () {
+    var parts = new Intl.DateTimeFormat('en-GB', {
+      timeZone: 'Europe/Warsaw',
+      weekday: 'short',
+      hour: '2-digit',
+      minute: '2-digit',
+      hourCycle: 'h23',
+    }).formatToParts(new Date());
+    var get = function (t) { return parts.find(function (p) { return p.type === t; }).value; };
+    var day = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(get('weekday')) + 1;
+    var now = get('hour') + ':' + get('minute');
+
+    var today = hours.find(function (h) { return h.day === day; });
+    var open = today && today.ranges.find(function (r) { return now >= r[0] && now < r[1]; });
+    var text;
+    if (open) {
+      text = 'Teraz otwarte · do ' + open[1];
+    } else {
+      var laterToday = today && today.ranges.find(function (r) { return now < r[0]; });
+      if (laterToday) {
+        text = 'Zamknięte · otwieramy o ' + laterToday[0];
+      } else {
+        for (var i = 1; i <= 7; i++) {
+          var next = hours.find(function (h) { return h.day === ((day - 1 + i) % 7) + 1; });
+          if (next && next.ranges.length) {
+            var when = i === 1 ? 'jutro' : (next.day === 2 ? 'we ' : 'w ') + next.label.toLowerCase();
+            text = 'Zamknięte · otwieramy ' + when + ' o ' + next.ranges[0][0];
+            break;
+          }
+        }
+      }
+    }
+
+    document.querySelectorAll('[data-open-status]').forEach(function (el) {
+      el.querySelector('[data-open-text]').textContent = text;
+      var dot = el.querySelector('[data-open-dot]');
+      dot.classList.remove('bg-paper/40');
+      dot.classList.add(open ? 'bg-emerald-400' : 'bg-rose-400');
+    });
+    var row = document.querySelector('[data-hours-day="' + day + '"]');
+    if (row) row.classList.add('font-semibold', 'text-paper');
+  })();
+</script>
