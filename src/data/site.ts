@@ -10,7 +10,7 @@ export const site = {
   // Pasek „wersja demonstracyjna” na górze strony. Ustaw false po akceptacji przez klienta.
   demoBanner: true,
 
-  phone: '577 666 087',
+  phone: '+48 577 666 087',
   phoneHref: 'tel:+48577666087',
   email: 'kontakt.astudio@gmail.com',
   instagram: 'https://www.instagram.com/astudio.gym/',
