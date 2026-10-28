@@ -2,51 +2,53 @@
 import { site } from '../data/site';
 ---
 
-<section id="cennik" class="mx-auto max-w-6xl px-5 py-20 md:py-28">
-  <div class="text-center">
-    <p class="eyebrow text-ink/55">Cennik</p>
-    <h2 class="mt-4 font-display text-4xl font-medium md:text-5xl">Proste ceny, bez haczyków</h2>
-    {
-      site.pricesArePlaceholder && (
-        <p class="mx-auto mt-5 inline-block rounded-full border border-amber-600/30 bg-amber-100 px-4 py-1.5 text-xs font-medium text-amber-900">
-          Ceny przykładowe, do uzupełnienia
-        </p>
-      )
-    }
-  </div>
-
-  <div class="mt-14 grid gap-4 md:grid-cols-3">
-    {
-      site.prices.map((p) => (
-        <article
-          class:list={[
-            'flex flex-col rounded-3xl p-8',
-            p.featured ? 'bg-ink text-paper shadow-2xl md:-my-4 md:py-12' : 'border border-ink/10 bg-white/60',
-          ]}
-        >
-          {p.featured && <p class="eyebrow mb-4 text-paper/60">Najczęściej wybierany</p>}
-          <h3 class="text-sm font-medium uppercase tracking-[0.2em]">{p.name}</h3>
-          <p class="mt-5 flex items-baseline gap-2">
-            <span class="font-display text-5xl font-medium">{p.price}</span>
-            {p.period && <span class={p.featured ? 'text-paper/60' : 'text-ink/55'}>{p.period}</span>}
+<section id="cennik" class="bg-ink">
+  <div class="mx-auto max-w-6xl px-5 py-20 md:py-28">
+    <div class="text-center">
+      <p class="eyebrow">Cennik</p>
+      <h2 class="mt-4 font-display text-4xl font-medium md:text-5xl">Proste ceny, bez haczyków</h2>
+      {
+        site.pricesArePlaceholder && (
+          <p class="mx-auto mt-5 inline-block rounded-full border border-gold/40 bg-gold/10 px-4 py-1.5 text-xs font-medium text-gold-light">
+            Ceny przykładowe, do uzupełnienia
           </p>
-          <ul class:list={['mt-6 space-y-2.5 text-sm', p.featured ? 'text-paper/80' : 'text-ink/70']}>
-            {p.details.map((d) => (
-              <li class="flex gap-3">
-                <span aria-hidden="true">—</span>
-                {d}
-              </li>
-            ))}
-          </ul>
-        </article>
-      ))
-    }
-  </div>
+        )
+      }
+    </div>
 
-  <div class="mt-12 flex flex-col items-center gap-4 text-center">
-    <p class="text-ink/70">Honorujemy karty sportowe:</p>
-    <ul class="flex flex-wrap justify-center gap-2">
-      {site.sportCards.map((c) => <li class="rounded-full border border-ink/15 px-4 py-1.5 text-sm font-medium">{c}</li>)}
-    </ul>
+    <div class="mt-14 grid gap-4 md:grid-cols-3">
+      {
+        site.prices.map((p) => (
+          <article
+            class:list={[
+              'flex flex-col rounded-3xl p-8',
+              p.featured ? 'bg-gold text-ink shadow-2xl shadow-gold/10 md:-my-4 md:py-12' : 'border border-paper/10 bg-graphite',
+            ]}
+          >
+            {p.featured && <p class="mb-4 text-xs font-medium uppercase tracking-[0.35em] text-ink/70">Najczęściej wybierany</p>}
+            <h3 class="text-sm font-medium uppercase tracking-[0.2em]">{p.name}</h3>
+            <p class="mt-5 flex items-baseline gap-2">
+              <span class:list={['font-display text-5xl font-medium', !p.featured && 'text-gold-light']}>{p.price}</span>
+              {p.period && <span class={p.featured ? 'text-ink/65' : 'text-paper/55'}>{p.period}</span>}
+            </p>
+            <ul class:list={['mt-6 space-y-2.5 text-sm', p.featured ? 'text-ink/80' : 'text-paper/70']}>
+              {p.details.map((d) => (
+                <li class="flex gap-3">
+                  <span aria-hidden="true">—</span>
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </div>
+
+    <div class="mt-12 flex flex-col items-center gap-4 text-center">
+      <p class="text-paper/70">Honorujemy karty sportowe:</p>
+      <ul class="flex flex-wrap justify-center gap-2">
+        {site.sportCards.map((c) => <li class="rounded-full border border-gold/40 px-4 py-1.5 text-sm font-medium text-gold-light">{c}</li>)}
+      </ul>
+    </div>
   </div>
 </section>

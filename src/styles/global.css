@@ -8,42 +8,35 @@
 @theme {
   --font-display: "Bodoni Moda", "Didot", Georgia, serif;
   --font-sans: "Jost Variable", "Jost", system-ui, sans-serif;
-  --color-ink: #0e0e0f;
-  --color-coal: #18181a;
-  --color-graphite: #2a2a2d;
-  --color-paper: #f4f2ee;
-  --color-stone: #e6e3dd;
+  --color-ink: #0a0a0a;
+  --color-coal: #121212;
+  --color-graphite: #1c1b19;
+  --color-paper: #f3efe6;
+  --color-gold: #9c8038;
+  --color-gold-light: #c8a75a;
 }
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 5.5rem;
 }
 
 body {
-  @apply bg-paper text-ink font-sans antialiased;
+  @apply bg-ink text-paper font-sans antialiased;
 }
 
 @utility eyebrow {
-  @apply text-xs font-medium uppercase tracking-[0.35em];
+  @apply text-xs font-medium uppercase tracking-[0.35em] text-gold-light;
 }
 
 @utility btn {
-  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium uppercase tracking-[0.15em] transition focus-visible:outline-2 focus-visible:outline-offset-2;
+  @apply inline-flex items-center justify-center gap-2 rounded-full px-6 py-3 text-sm font-medium uppercase tracking-[0.15em] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gold-light;
 }
 
-@utility btn-light {
-  @apply btn bg-paper text-ink hover:bg-white focus-visible:outline-paper;
+@utility btn-gold {
+  @apply btn bg-gold text-ink hover:bg-gold-light;
 }
 
-@utility btn-dark {
-  @apply btn bg-ink text-paper hover:bg-graphite focus-visible:outline-ink;
-}
-
-@utility btn-ghost-light {
-  @apply btn border border-paper/40 text-paper hover:border-paper hover:bg-paper/10 focus-visible:outline-paper;
-}
-
-@utility btn-ghost-dark {
-  @apply btn border border-ink/25 text-ink hover:border-ink hover:bg-ink/5 focus-visible:outline-ink;
+@utility btn-ghost {
+  @apply btn border border-gold/60 text-gold-light hover:border-gold-light hover:bg-gold/10;
 }

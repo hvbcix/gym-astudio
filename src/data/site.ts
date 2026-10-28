@@ -2,6 +2,7 @@
 
 export const site = {
   name: 'A STUDIO',
+  owner: 'Ania Iskierska',
   tagline: 'Kameralna siłownia i fitness w Mosinie',
   description:
     'A STUDIO to kameralna siłownia i studio fitness w Mosinie. Wolne ciężary, strefa cardio, zajęcia grupowe i treningi personalne w świetnej atmosferze.',
@@ -89,10 +90,6 @@ export const site = {
     {
       author: 'Izabela Ł.',
       text: 'Polecam klimatyczne miejsce, fajna atmosfera. Indywidualne podejście. Choć nie jest lekko, trenerzy są wymagający, to chodzi się tu z przyjemnością.',
-    },
-    {
-      author: 'Jarek I.',
-      text: 'Super siłownia i fitness. Zarówno dla mężczyzn, jak i kobiet. Wysokiej jakości obsługa i sprzęt.',
     },
     {
       author: 'Opinia z Google',

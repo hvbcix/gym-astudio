@@ -25,7 +25,13 @@ Prawie wszystko jest w jednym pliku: **`src/data/site.ts`**.
 | Opinie, oferta, FAQ | `reviews`, `offer`, `faq` |
 | Żółty pasek „wersja demonstracyjna” | `demoBanner: false` po akceptacji klienta |
 
-Zdjęcia leżą w `src/assets/`. Podmień pliki na lepsze zdjęcia od siłowni (te same nazwy), a Astro samo je zoptymalizuje.
+Zdjęcia i logo leżą w `src/assets/`. Żeby podmienić zdjęcie, wgraj nowe pod tą samą nazwą, a Astro samo je zoptymalizuje:
+
+- `sala-hantle.jpg` – zdjęcie na górze strony
+- `sala-maszyny.jpg`, `strefa-cardio.jpg`, `sala-zajec.jpg` – mozaika w sekcji Oferta
+- `logo.png` – pełne logo (sekcja o Ani), `logo-horizontal.png` – wersja pozioma do nagłówka i stopki
+
+Kolory (czerń i złoto z logo) są zdefiniowane na górze `src/styles/global.css` (`--color-gold`, `--color-gold-light`).
 
 ## Grafik edytowany przez właścicielkę (arkusz Google)
 

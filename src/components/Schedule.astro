@@ -9,40 +9,40 @@ const byDay = visibleDays.map((day) => ({
 }));
 ---
 
-<section id="grafik" class="bg-ink py-20 text-paper md:py-28" data-sheet-url={site.scheduleSheetCsvUrl}>
+<section id="grafik" class="bg-coal py-20 text-paper md:py-28" data-sheet-url={site.scheduleSheetCsvUrl}>
   <div class="mx-auto max-w-6xl px-5">
     <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
       <div>
-        <p class="eyebrow text-paper/55">Zajęcia grupowe</p>
+        <p class="eyebrow">Zajęcia grupowe</p>
         <h2 class="mt-4 font-display text-5xl font-medium md:text-7xl">Grafik</h2>
       </div>
       <p class="max-w-md text-paper/70">
-        Małe grupy, więc warto dać znać wcześniej. Zapisy telefonicznie pod <a href={site.phoneHref} class="text-paper underline underline-offset-4">{site.phone}</a> lub w wiadomości na Instagramie.
+        Małe grupy, więc warto dać znać wcześniej. Zapisy telefonicznie pod <a href={site.phoneHref} class="text-gold-light underline underline-offset-4">{site.phone}</a> lub w wiadomości na Instagramie.
       </p>
     </div>
 
     <div class="mt-12 grid gap-3 sm:grid-cols-2 lg:grid-cols-5" data-schedule-grid>
       {
         byDay.map(({ day, classes }) => (
-          <article class="overflow-hidden rounded-2xl bg-paper text-ink" data-day={day}>
-            <h3 class="flex items-center justify-between bg-graphite px-5 py-3 text-xs font-medium uppercase tracking-[0.25em] text-paper">
+          <article class="overflow-hidden rounded-2xl border border-gold/20 bg-graphite text-paper" data-day={day}>
+            <h3 class="flex items-center justify-between bg-gold px-5 py-3 text-xs font-medium uppercase tracking-[0.25em] text-ink">
               {day}
-              <span class="hidden rounded-full bg-paper px-2 py-0.5 text-[0.6rem] tracking-[0.15em] text-ink" data-today-badge>
+              <span class="hidden rounded-full bg-ink px-2 py-0.5 text-[0.6rem] tracking-[0.15em] text-gold-light" data-today-badge>
                 Dziś
               </span>
             </h3>
             {classes.length ? (
-              <ul class="divide-y divide-ink/10 px-5">
+              <ul class="divide-y divide-paper/10 px-5">
                 {classes.map((c) => (
                   <li class="py-5">
-                    <p class="font-display text-3xl font-medium">{c.time}</p>
+                    <p class="font-display text-3xl font-medium text-gold-light">{c.time}</p>
                     <p class="mt-1 text-sm font-medium uppercase tracking-[0.18em]">{c.name}</p>
-                    {c.note && <p class="mt-1 text-sm text-ink/60">{c.note}</p>}
+                    {c.note && <p class="mt-1 text-sm text-paper/55">{c.note}</p>}
                   </li>
                 ))}
               </ul>
             ) : (
-              <p class="px-5 py-6 text-sm text-ink/60">Bez zajęć grupowych. Siłownia otwarta.</p>
+              <p class="px-5 py-6 text-sm text-paper/55">Bez zajęć grupowych. Siłownia otwarta.</p>
             )}
           </article>
         ))
@@ -112,19 +112,19 @@ const byDay = visibleDays.map((day) => ({
       .map((day) => {
         const classes = rows.filter((r) => r.day === day).sort((a, b) => a.time.localeCompare(b.time));
         const list = classes.length
-          ? `<ul class="divide-y divide-ink/10 px-5">${classes
+          ? `<ul class="divide-y divide-paper/10 px-5">${classes
               .map(
                 (c) => `<li class="py-5">
-                  <p class="font-display text-3xl font-medium">${esc(c.time)}</p>
+                  <p class="font-display text-3xl font-medium text-gold-light">${esc(c.time)}</p>
                   <p class="mt-1 text-sm font-medium uppercase tracking-[0.18em]">${esc(c.name)}</p>
-                  ${c.note ? `<p class="mt-1 text-sm text-ink/60">${esc(c.note)}</p>` : ''}
+                  ${c.note ? `<p class="mt-1 text-sm text-paper/55">${esc(c.note)}</p>` : ''}
                 </li>`,
               )
               .join('')}</ul>`
-          : '<p class="px-5 py-6 text-sm text-ink/60">Bez zajęć grupowych. Siłownia otwarta.</p>';
-        return `<article class="overflow-hidden rounded-2xl bg-paper text-ink" data-day="${day}">
-          <h3 class="flex items-center justify-between bg-graphite px-5 py-3 text-xs font-medium uppercase tracking-[0.25em] text-paper">
-            ${day}<span class="hidden rounded-full bg-paper px-2 py-0.5 text-[0.6rem] tracking-[0.15em] text-ink" data-today-badge>Dziś</span>
+          : '<p class="px-5 py-6 text-sm text-paper/55">Bez zajęć grupowych. Siłownia otwarta.</p>';
+        return `<article class="overflow-hidden rounded-2xl border border-gold/20 bg-graphite text-paper" data-day="${day}">
+          <h3 class="flex items-center justify-between bg-gold px-5 py-3 text-xs font-medium uppercase tracking-[0.25em] text-ink">
+            ${day}<span class="hidden rounded-full bg-ink px-2 py-0.5 text-[0.6rem] tracking-[0.15em] text-gold-light" data-today-badge>Dziś</span>
           </h3>${list}</article>`;
       })
       .join('');
@@ -136,7 +136,7 @@ const byDay = visibleDays.map((day) => ({
     const i = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].indexOf(weekday);
     const card = grid.querySelector<HTMLElement>(`[data-day="${DAYS[i]}"]`);
     if (!card) return;
-    card.classList.add('ring-2', 'ring-paper', 'ring-offset-4', 'ring-offset-ink');
+    card.classList.add('ring-2', 'ring-gold-light', 'ring-offset-4', 'ring-offset-coal');
     card.querySelector('[data-today-badge]')?.classList.remove('hidden');
   }
 

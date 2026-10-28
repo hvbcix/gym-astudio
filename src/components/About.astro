@@ -1,0 +1,28 @@
+---
+import Logo from './Logo.astro';
+import { site } from '../data/site';
+---
+
+<section id="o-nas" class="relative overflow-hidden bg-ink">
+  <div class="pointer-events-none absolute -left-40 top-1/2 size-[30rem] -translate-y-1/2 rounded-full bg-gold/10 blur-3xl"></div>
+  <div class="relative mx-auto grid max-w-6xl items-center gap-12 px-5 py-20 md:grid-cols-[0.8fr_1.2fr] md:py-28">
+    <div class="flex justify-center">
+      <Logo variant="full" class="h-64 md:h-80" />
+    </div>
+    <div>
+      <p class="eyebrow">Studio by {site.owner}</p>
+      <h2 class="mt-4 font-display text-4xl font-medium leading-tight md:text-5xl">
+        Trenujesz u kogoś, komu naprawdę zależy.
+      </h2>
+      <div class="mt-6 space-y-4 text-lg text-paper/70">
+        <p>
+          A STUDIO prowadzi {site.owner}, trenerka personalna. To ona ułoży Ci plan, poprawi technikę i dopilnuje, żeby każdy trening miał sens.
+        </p>
+        <p>
+          Klubowicze cenią to miejsce za indywidualne podejście i atmosferę, w której wymagający trening sprawia przyjemność.
+        </p>
+      </div>
+      <a href={site.phoneHref} class="btn-ghost mt-8">Umów trening personalny</a>
+    </div>
+  </div>
+</section>

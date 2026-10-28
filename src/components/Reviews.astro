@@ -2,29 +2,29 @@
 import { site } from '../data/site';
 ---
 
-<section id="opinie" class="bg-stone py-20 md:py-28">
+<section id="opinie" class="bg-coal py-20 md:py-28">
   <div class="mx-auto max-w-6xl px-5">
     <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
       <div>
-        <p class="eyebrow text-ink/55">Opinie</p>
+        <p class="eyebrow">Opinie</p>
         <h2 class="mt-4 font-display text-4xl font-medium md:text-5xl">
-          {site.rating.value} <span class="text-amber-500">★</span> w Google
+          {site.rating.value} <span class="text-gold-light">★</span> w Google
         </h2>
-        <p class="mt-3 text-ink/65">Na podstawie {site.rating.count} opinii naszych klubowiczów.</p>
+        <p class="mt-3 text-paper/65">Na podstawie {site.rating.count} opinii naszych klubowiczów.</p>
       </div>
-      <a href={site.googleReviews} target="_blank" rel="noopener" class="btn-ghost-dark self-start md:self-auto">
+      <a href={site.googleReviews} target="_blank" rel="noopener" class="btn-ghost self-start md:self-auto">
         Wszystkie opinie
       </a>
     </div>
 
-    <div class="mt-12 grid gap-4 md:grid-cols-2">
+    <div class="mt-12 grid gap-4 md:grid-cols-3">
       {
         site.reviews.map((r) => (
-          <figure class="flex flex-col justify-between rounded-3xl bg-paper p-8">
-            <blockquote class="font-display text-xl leading-relaxed md:text-2xl">„{r.text}”</blockquote>
+          <figure class="flex flex-col justify-between rounded-3xl border border-gold/15 bg-graphite p-8">
+            <blockquote class="font-display text-xl leading-relaxed">„{r.text}”</blockquote>
             <figcaption class="mt-6 flex items-center justify-between text-sm">
-              <span class="font-medium uppercase tracking-[0.18em]">{r.author}</span>
-              <span class="text-amber-500" aria-label="5 na 5 gwiazdek">★★★★★</span>
+              <span class="font-medium uppercase tracking-[0.18em] text-paper/80">{r.author}</span>
+              <span class="text-gold-light" aria-label="5 na 5 gwiazdek">★★★★★</span>
             </figcaption>
           </figure>
         ))

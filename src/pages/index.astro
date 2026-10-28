@@ -3,6 +3,7 @@ import Layout from '../layouts/Layout.astro';
 import Header from '../components/Header.astro';
 import Hero from '../components/Hero.astro';
 import Offer from '../components/Offer.astro';
+import About from '../components/About.astro';
 import Schedule from '../components/Schedule.astro';
 import Pricing from '../components/Pricing.astro';
 import Reviews from '../components/Reviews.astro';
@@ -18,7 +19,7 @@ const hours = site.openingHours;
 <Layout>
   {
     site.demoBanner && (
-      <div class="bg-amber-200 px-5 py-2 text-center text-xs font-medium text-amber-950">
+      <div class="bg-gold px-5 py-2 text-center text-xs font-medium text-ink">
         Wersja demonstracyjna strony przygotowana dla {site.name}. Ceny i część treści do potwierdzenia.
       </div>
     )
@@ -27,6 +28,7 @@ const hours = site.openingHours;
   <main>
     <Hero />
     <Offer />
+    <About />
     <Schedule />
     <Pricing />
     <Reviews />
@@ -78,6 +80,6 @@ const hours = site.openingHours;
       dot.classList.add(open ? 'bg-emerald-400' : 'bg-rose-400');
     });
     var row = document.querySelector('[data-hours-day="' + day + '"]');
-    if (row) row.classList.add('font-semibold', 'text-paper');
+    if (row) row.classList.add('font-semibold', 'text-gold-light');
   })();
 </script>

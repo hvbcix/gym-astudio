@@ -5,10 +5,10 @@ const formatRanges = (ranges: [string, string][]) =>
   ranges.length ? ranges.map(([a, b]) => `${a}–${b}`).join(', ') : 'Zamknięte';
 ---
 
-<section id="kontakt" class="bg-ink py-20 text-paper md:py-28">
+<section id="kontakt" class="bg-coal py-20 md:py-28">
   <div class="mx-auto grid max-w-6xl gap-12 px-5 lg:grid-cols-2">
     <div>
-      <p class="eyebrow text-paper/55">Kontakt i dojazd</p>
+      <p class="eyebrow">Kontakt i dojazd</p>
       <h2 class="mt-4 font-display text-4xl font-medium md:text-5xl">Wpadnij na pierwszy trening</h2>
       <p class="mt-5 max-w-md text-paper/70">
         Zadzwoń albo napisz. Pokażemy salę, dobierzemy zajęcia i odpowiemy na każde pytanie.
@@ -16,19 +16,19 @@ const formatRanges = (ranges: [string, string][]) =>
 
       <dl class="mt-10 grid gap-6 sm:grid-cols-2">
         <div>
-          <dt class="eyebrow text-paper/50">Adres</dt>
+          <dt class="eyebrow text-gold-light/80">Adres</dt>
           <dd class="mt-2">{site.address.street}<br />{site.address.postalCode} {site.address.city}</dd>
         </div>
         <div>
-          <dt class="eyebrow text-paper/50">Telefon</dt>
+          <dt class="eyebrow text-gold-light/80">Telefon</dt>
           <dd class="mt-2"><a href={site.phoneHref} class="hover:underline">{site.phone}</a></dd>
         </div>
         <div>
-          <dt class="eyebrow text-paper/50">E-mail</dt>
+          <dt class="eyebrow text-gold-light/80">E-mail</dt>
           <dd class="mt-2 break-all"><a href={`mailto:${site.email}`} class="hover:underline">{site.email}</a></dd>
         </div>
         <div>
-          <dt class="eyebrow text-paper/50">Social media</dt>
+          <dt class="eyebrow text-gold-light/80">Social media</dt>
           <dd class="mt-2 flex gap-4">
             <a href={site.instagram} target="_blank" rel="noopener" class="hover:underline">Instagram</a>
             <a href={site.facebook} target="_blank" rel="noopener" class="hover:underline">Facebook</a>
@@ -37,7 +37,7 @@ const formatRanges = (ranges: [string, string][]) =>
       </dl>
 
       <div class="mt-10">
-        <h3 class="eyebrow flex items-center gap-3 text-paper/50">
+        <h3 class="eyebrow flex items-center gap-3">
           Godziny otwarcia
           <span class="inline-flex items-center gap-2 normal-case tracking-normal text-paper/80" data-open-status>
             <span class="size-2 rounded-full bg-paper/40" data-open-dot></span><span data-open-text></span>
@@ -58,13 +58,13 @@ const formatRanges = (ranges: [string, string][]) =>
       </div>
 
       <div class="mt-10 flex flex-col gap-3 sm:flex-row">
-        <a href={site.phoneHref} class="btn-light">Zadzwoń</a>
-        <a href={site.instagram} target="_blank" rel="noopener" class="btn-ghost-light">Napisz na Instagramie</a>
+        <a href={site.phoneHref} class="btn-gold">Zadzwoń</a>
+        <a href={site.instagram} target="_blank" rel="noopener" class="btn-ghost">Napisz na Instagramie</a>
       </div>
     </div>
 
     <div class="flex flex-col gap-4">
-      <div class="min-h-80 flex-1 overflow-hidden rounded-3xl bg-coal">
+      <div class="min-h-80 flex-1 overflow-hidden rounded-3xl bg-graphite">
         <iframe
           src={site.mapsEmbed}
           title="Mapa dojazdu do A STUDIO"
@@ -72,7 +72,7 @@ const formatRanges = (ranges: [string, string][]) =>
           loading="lazy"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
       </div>
-      <a href={site.mapsDirections} target="_blank" rel="noopener" class="btn-ghost-light">Wyznacz trasę w Google Maps</a>
+      <a href={site.mapsDirections} target="_blank" rel="noopener" class="btn-ghost">Wyznacz trasę w Google Maps</a>
     </div>
   </div>
 </section>
